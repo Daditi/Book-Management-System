@@ -1,20 +1,46 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'book_data.dart';
 import 'book_model.dart';
 import 'book_read.dart';
 
-class BooksDetails extends StatelessWidget {
+class BooksDetails extends StatefulWidget {
   final int index;
+  bool selected;
 
-  BooksDetails({required this.index});
+  BooksDetails({required this.index, required this.selected});
+
+  @override
+  State<BooksDetails> createState() => _BooksDetailsState();
+}
+
+class _BooksDetailsState extends State<BooksDetails> {
+  String name = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _name();
+  }
+
+  Future<void> _name() async {
+    final prefs = await SharedPreferences.getInstance();
+    name = (await prefs.getString('Name'))!;
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    print(name);
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
     List<Book> allBooks = [
       Book(
-          name: "Recipie For a Per..",
+          name: "Recipie For a Person",
           author: "Karma Brown",
           coverImage: "lib/assets/images/3.png",
           rating: 4.0,
@@ -101,19 +127,33 @@ class BooksDetails extends StatelessWidget {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_back,
-                              color: Colors.black,
+                              color: Color(0xffC44536),
                               size: 35,
                             ),
-                            onPressed: () => Navigator.of(context).pop(),
+                            onPressed: () => Navigator.pop(context),
                           ),
                           IconButton(
-                            icon: Icon(
-                              Icons.favorite_border,
+                            icon: widget.selected ? Icon(
+                              Icons.check_circle_rounded,
                               color: Colors.black,
                               size: 35,
+                            ):Icon(
+                              Icons.my_library_add_rounded,
+                              color: Color(0xffC44536),
+                              size: 35,
                             ),
-                            onPressed: () {},
-                          ),
+                            onPressed: () async {
+                              print("@@@@@@@@@@@@@");
+                              if(!widget.selected){
+                                await  FirebaseFirestore.instance
+                                    .collection(name).doc(widget.index.toString()).set({"index":widget.index});
+                                setState(() {
+                                  widget.selected=!widget.selected;
+                                });
+                              }
+
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -148,7 +188,7 @@ class BooksDetails extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                               child: Image.asset(
                                 // "assets/images/0.jfif",
-                               allBooks[index].coverImage,
+                               allBooks[widget.index].coverImage,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -174,7 +214,7 @@ class BooksDetails extends StatelessWidget {
                     ),
                     Text(
                       // "Conjure Women",
-                      allBooks[index].name,
+                      allBooks[widget.index].name,
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w700,
@@ -185,7 +225,7 @@ class BooksDetails extends StatelessWidget {
                     ),
                     Text(
                       //"By Afia Atakora",
-                      "By ${allBooks[index].name}",
+                      "By ${allBooks[widget.index].author}",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -240,7 +280,7 @@ class BooksDetails extends StatelessWidget {
                             right: 20,
                           ),
                           child: Text(
-                            allBooks[index].text,
+                            allBooks[widget.index].text,
                             style: TextStyle(
                               fontSize: 20,
                               letterSpacing: 1.5,
@@ -291,7 +331,7 @@ class BooksDetails extends StatelessWidget {
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => BooksRead(  index: index, ),
+                              builder: (context) => BooksRead(  index: widget.index, selected: widget.selected  ),
                             ),
                           ),
                           child: Text(

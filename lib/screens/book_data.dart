@@ -2,7 +2,7 @@ import 'book_model.dart';
 
 List<Book> _allBooks = [
   Book(
-      name: "Recipie For a Per..",
+      name: "Recipie For a Person",
       author: "Karma Brown",
       coverImage: "lib/assets/images/3.png",
       rating: 4.0,

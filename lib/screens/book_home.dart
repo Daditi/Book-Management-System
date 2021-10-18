@@ -118,19 +118,23 @@ List<int> l=[];
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Hello,",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        name,
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            "Hello,  ",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            name,
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
                       ),
                       Container(
                         margin: EdgeInsets.only(
@@ -162,7 +166,7 @@ List<int> l=[];
 class BookSection extends StatelessWidget {
   List<Book> allBooks = [
     Book(
-        name: "Recipie For a Per..",
+        name: "Recipie For a Person",
         author: "Karma Brown",
         coverImage: "lib/assets/images/3.png",
         rating: 4.0,
@@ -255,14 +259,30 @@ class BookSection extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.5,
             child: ListView.builder(
               itemBuilder: (ctx, i) => GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (ctx) => BooksDetails(
-                      index: i,
+                onTap: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  final name = (await prefs.getString('Name'))!;
+                  await FirebaseFirestore.instance.collection(name).doc(i.toString()).get().then((DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists) {
+                      print('Document exists on the database');
+                      prefs.setBool('selected', true);
+                      bool selected = (prefs.getBool('selected'))!;
+                    }else{
+                      print('Document not');
+                      prefs.setBool('selected', false);
+                      bool selected = false;
+                    }
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => BooksDetails(
+                        index: i,
+                        selected: (prefs.getBool('selected'))!
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                } ,
                 child: Row(
                   children: [
                     Column(

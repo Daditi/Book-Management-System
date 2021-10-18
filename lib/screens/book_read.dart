@@ -7,8 +7,8 @@ import 'book_model.dart';
 class BooksRead extends StatefulWidget {
 
   final int index;
-
-  BooksRead({required this.index});
+  bool selected;
+  BooksRead({required this.index,required this.selected});
 
   @override
   State<BooksRead> createState() => _BooksReadState();
@@ -29,13 +29,13 @@ class _BooksReadState extends State<BooksRead> {
     name = (await prefs.getString('Name'))!;
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     print(name);
+
      }
 
-  bool selected = false;
 
   List<Book> allBooks = [
     Book(
-        name: "Recipie For a Per..",
+        name: "Recipie For a Person",
         author: "Karma Brown",
         coverImage: "lib/assets/images/3.png",
         rating: 4.0,
@@ -124,32 +124,31 @@ class _BooksReadState extends State<BooksRead> {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_back,
-                              color: Colors.black,
+                              color: Color(0xffC44536),
                               size: 35,
                             ),
                             onPressed: () => Navigator.pop(context),
                           ),
                           IconButton(
-                            icon: selected ? Icon(
+                            icon: widget.selected ? Icon(
                               Icons.check_circle_rounded,
                               color: Colors.black,
                               size: 35,
                             ):Icon(
                               Icons.my_library_add_rounded,
-                              color: Colors.black,
+                              color: Color(0xffC44536),
                               size: 35,
                             ),
                             onPressed: () async {
-
-                           if(!selected){
+                              print("@@@@@@@@@@@@@");
+                           if(!widget.selected){
                              await  FirebaseFirestore.instance
                                  .collection(name).doc(widget.index.toString()).set({"index":widget.index});
-                             print("@@@@@@@@@@@@@");
+                             setState(() {
+                               widget.selected=!widget.selected;
+                             });
                            }
 
-                            setState(() {
-                              selected=!selected;
-                            });
                             },
                           )
                         ],

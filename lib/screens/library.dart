@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mad_mini_project/screens/book_home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'book_model.dart';
@@ -18,7 +19,7 @@ class _LibraryState extends State<Library> {
   
   List<Book> allBooks = [
     Book(
-        name: "Recipie For a Per..",
+        name: "Recipie For a Person",
         author: "Karma Brown",
         coverImage: "lib/assets/images/3.png",
         rating: 4.0,
@@ -113,6 +114,27 @@ class _LibraryState extends State<Library> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xffc44536),
+        automaticallyImplyLeading: false,
+        title: Text("Library"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BooksHome(),
+                ),
+              );
+            },
+          )
+        ],
+      ),
       body: ListView.builder(
         itemCount: widget.l.length,
         itemBuilder: (ctx, i) => GestureDetector(
@@ -121,6 +143,7 @@ class _LibraryState extends State<Library> {
             MaterialPageRoute(
               builder: (ctx) => BooksDetails(
                 index: i,
+                selected: true,
               ),
             ),
           ),
@@ -210,7 +233,7 @@ class _LibraryState extends State<Library> {
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BooksRead(  index: widget.l[i], ),
+                          builder: (context) => BooksRead(  index: widget.l[i], selected: true, ),
                         ),
                       ),
                       child: Text(
@@ -236,19 +259,21 @@ class _LibraryState extends State<Library> {
                     child: FlatButton(
                       onPressed: () async {
 await FirebaseFirestore.instance.collection(name).doc(widget.l[i].toString()).delete();
-List<int> x=[];
-await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
-  querySnapshot.docs.forEach((result) {
-    print(result.data()["index"]);
-    x.add(result.data()["index"]);
-  });
-});
+// Navigator.of(context).pop();
+// List<int> x=[];
+// await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
+//   querySnapshot.docs.forEach((result) {
+//     print(result.data()["index"]);
+//     x.add(result.data()["index"]);
+//   });
+// });
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Library(  l: x, ),
+                            builder: (context) => BooksHome(),
                           ),
                         );
+
                       },
                       child: Text(
                         "REMOVE",
