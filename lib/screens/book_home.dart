@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mad_mini_project/auth/signin.dart';
 import 'package:mad_mini_project/screens/library.dart';
@@ -24,7 +25,7 @@ class _BooksHomeState extends State<BooksHome> {
     _name();
   }
 
-  Future<void> _name() async {
+  void _name() async {
     final prefs = await SharedPreferences.getInstance();
     name = (await prefs.getString('Name'))!;
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -34,7 +35,7 @@ class _BooksHomeState extends State<BooksHome> {
     }
 
   }
-
+List<int> l=[];
     @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,12 +64,22 @@ class _BooksHomeState extends State<BooksHome> {
                       color: Colors.white,
                       size: 35,
                     ),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Library(),
-                      ),
-                    ),
+                    onPressed: () async{
+                      await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
+                        querySnapshot.docs.forEach((result) {
+                          print(result.data()["index"]);
+                          l.add(result.data()["index"]);
+                        });
+                      });
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Library(l:l),
+                        ),
+                      );
+                    }
+
                   ),
                   IconButton(
                     icon: Icon(

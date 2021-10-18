@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'book_model.dart';
+import 'book_read.dart';
 import 'books_details.dart';
 
 class Library extends StatefulWidget {
-  const Library({Key? key}) : super(key: key);
-
+  final List<int> l;
+  Library({required this.l});
   @override
   _LibraryState createState() => _LibraryState();
 }
@@ -82,6 +84,7 @@ class _LibraryState extends State<Library> {
   ];
   
   String name = "";
+  int len=0;
   List<int> l =[];
   @override
   void initState() {
@@ -93,13 +96,17 @@ class _LibraryState extends State<Library> {
   Future<void> _name() async {
     final prefs = await SharedPreferences.getInstance();
     name = (await prefs.getString('Name'))!;
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    print(name);
    await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
+        print(result.data()["index"]);
         l.add(result.data()["index"]);
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        print(l);
       });
     });
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    print(l);
+    len = l.length;
   }
 
 
@@ -107,14 +114,162 @@ class _LibraryState extends State<Library> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: l.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text("hello"),
-          );
-        },
+        itemCount: widget.l.length,
+        itemBuilder: (ctx, i) => GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (ctx) => BooksDetails(
+                index: i,
+              ),
+            ),
+          ),
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10,
+                      left: 5,
+                    ),
+                    height: MediaQuery.of(context).size.height * 0.27,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.4),
+                                blurRadius: 5,
+                                offset: Offset(8, 8),
+                                spreadRadius: 1,
+                              )
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.asset(
+                              allBooks[widget.l[i]].coverImage,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height:
+                          MediaQuery.of(context).size.height * 0.27,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: new LinearGradient(
+                              colors: [
+                                Colors.black.withOpacity(0.4),
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.4),
+                              ],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    allBooks[widget.l[i]].name,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    allBooks[widget.l[i]].author,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 30,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Color(0xffc44536),
+                    ),
+                    child: FlatButton(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BooksRead(  index: widget.l[i], ),
+                        ),
+                      ),
+                      child: Text(
+                        "READ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 30,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Color(0xffc44536),
+                    ),
+                    child: FlatButton(
+                      onPressed: () async {
+await FirebaseFirestore.instance.collection(name).doc(widget.l[i].toString()).delete();
+List<int> x=[];
+await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
+  querySnapshot.docs.forEach((result) {
+    print(result.data()["index"]);
+    x.add(result.data()["index"]);
+  });
+});
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Library(  l: x, ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "REMOVE",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 30,
+              ),
+            ],
+          ),
+        ),
+        scrollDirection: Axis.vertical,
       ),
-
     );
   }
 }
