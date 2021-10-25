@@ -117,7 +117,7 @@ Widget Tile(){
                   children: [
                     Text(
                       "The Tempest",
-                      style: GoogleFonts.poppins( color: Colors.black, fontSize: 22, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.poppins( color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 8,

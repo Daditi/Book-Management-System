@@ -244,6 +244,7 @@ class _LibraryState extends State<Library> {
                                 color: Colors.lightGreen,
                                 onPressed: () async {
                                   await FirebaseFirestore.instance.collection(name).doc(widget.l[i].toString()).delete();
+                                  // await FirebaseFirestore.instance.collection("Admin").where("issuer",isEqualTo: name).delete();
 List<int> x=[];
 await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
   querySnapshot.docs.forEach((result) {
