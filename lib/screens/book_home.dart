@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mad_mini_project/auth/signin.dart';
 import 'package:mad_mini_project/screens/library.dart';
+import 'package:mad_mini_project/screens/sem6.dart';
+import 'package:mad_mini_project/screens/semester.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'book_data.dart';
 import 'book_model.dart';
@@ -48,6 +51,7 @@ List<int> l=[];
         ),
         child: Column(
           children: [
+
             Container(
               padding: EdgeInsets.only(
                 left: 30,
@@ -83,6 +87,21 @@ List<int> l=[];
                   ),
                   IconButton(
                     icon: Icon(
+                      Icons.bookmark_outlined,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Semester(),
+                        ),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
                       Icons.logout,
                       color: Colors.white,
                       size: 35,
@@ -104,11 +123,10 @@ List<int> l=[];
               child: Container(
                 padding: EdgeInsets.only(
                   top: 50,
-                  left: 50,
                 ),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xfffff8ee),
+                  color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
@@ -121,14 +139,14 @@ List<int> l=[];
                       Row(
                         children: [
                           Text(
-                            "Hello,  ",
+                            "       Welcome to  ",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
-                            name,
+                            "BookLib",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.w700,
@@ -139,17 +157,19 @@ List<int> l=[];
                       Container(
                         margin: EdgeInsets.only(
                           top: 15,
+                          left: 35,
                           bottom: 30,
                         ),
-                        width: 100,
+                        width: 200,
                         height: 10,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: Color(0xffc44536),
+                          color: Colors.lightGreen[800],
                         ),
                       ),
+
                       BookSection(
-                        heading: "Reading List",
+                        heading: "   Reading List",
                       ),
                     ],
                   ),

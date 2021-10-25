@@ -1,23 +1,35 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mad_mini_project/screens/book_home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'book_model.dart';
-import 'book_read.dart';
 import 'books_details.dart';
+class Sem6 extends StatefulWidget {
+  const Sem6({Key? key}) : super(key: key);
 
-class Library extends StatefulWidget {
-  final List<int> l;
-  Library({required this.l});
   @override
-  _LibraryState createState() => _LibraryState();
+  _Sem6State createState() => _Sem6State();
 }
 
-class _LibraryState extends State<Library> {
-  
+class _Sem6State extends State<Sem6> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Semester VII"),centerTitle: true, backgroundColor: Colors.lightGreen,),
+      body: Container(
+        color: Colors.lightGreen[100],
+        child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Container(child: BookSection( heading: "Reading List",))),
+      ),
+    );
+  }
+}
+
+class BookSection extends StatelessWidget {
   List<Book> allBooks = [
     Book(
         name: "Recipie For a Person",
@@ -84,248 +96,188 @@ class _LibraryState extends State<Library> {
             "\nJo visits Laurie when he is sick, and meets his grandfather, Mr. Laurence. She inadvertently insults a painting of Mr. Laurence in front of the man himself. Luckily, Laurie’s grandfather admires Jo’s spunk, and they become friends. Soon, Mr. Laurence meets all the sisters, and Beth becomes his special favorite. Mr. Laurence gives her his deceased granddaughter’s piano."
     ),
   ];
-  
-  String name = "";
-  int len=0;
-  List<int> l =[];
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _name();
-  }
-
-  Future<void> _name() async {
-    final prefs = await SharedPreferences.getInstance();
-    name = (await prefs.getString('Name'))!;
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    print(name);
-   await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        print(result.data()["index"]);
-        l.add(result.data()["index"]);
-      });
-    });
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    print(l);
-    len = l.length;
-  }
 
 
+
+  final String heading;
+  BookSection({required this.heading});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightGreen,
-        automaticallyImplyLeading: false,
-        title: Text("Library"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.home,
-              color: Colors.white,
+    List<Book> bookList;
+
+    bookList = allBooks;
+
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+
+            padding: EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 10
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BooksHome(),
+            height: MediaQuery.of(context).size.height * 0.99,
+            child: ListView.builder(
+              itemBuilder: (ctx, i) => Container(
+margin: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+                padding: EdgeInsets.all(10),
+                decoration:BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white),
+
+                child: GestureDetector(
+                  onTap: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    final name = (await prefs.getString('Name'))!;
+                    await FirebaseFirestore.instance.collection(name).doc(i.toString()).get().then((DocumentSnapshot documentSnapshot) {
+                      if (documentSnapshot.exists) {
+                        print('Document exists on the database');
+                        prefs.setBool('selected', true);
+                        bool selected = (prefs.getBool('selected'))!;
+                      }else{
+                        print('Document not');
+                        prefs.setBool('selected', false);
+                        bool selected = false;
+                      }
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => BooksDetails(
+                            index: i,
+                            selected: (prefs.getBool('selected'))!
+                        ),
+                      ),
+                    );
+                  } ,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  allBooks[i].name,
+                                  style: GoogleFonts.poppins( color: Colors.black, fontSize: 22, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(allBooks[i].author,style: GoogleFonts.poppins( color: Colors.black, fontSize: 16),),
+                              ],
+                            ),
+                          ),
+
+                          Expanded(
+                            flex: 1,
+                            child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(20),
+                                                child: Image.asset(
+                                                  allBooks[i].coverImage,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15,),
+                    ],
+
+                  ),
+
+
+                  // child: Row(
+                  //   children: [
+                  //     Column(
+                  //       children: [
+                  //         Container(
+                  //           margin: EdgeInsets.only(
+                  //             top: 10,
+                  //             left: 5,
+                  //           ),
+                  //           height: MediaQuery.of(context).size.height * 0.27,
+                  //           width: MediaQuery.of(context).size.width * 0.4,
+                  //           child: Stack(
+                  //             children: [
+                  //               Container(
+                  //                 width: double.infinity,
+                  //                 decoration: BoxDecoration(
+                  //                   borderRadius: BorderRadius.circular(20),
+                  //                   boxShadow: <BoxShadow>[
+                  //                     BoxShadow(
+                  //                       color: Colors.black.withOpacity(0.4),
+                  //                       blurRadius: 5,
+                  //                       offset: Offset(8, 8),
+                  //                       spreadRadius: 1,
+                  //                     )
+                  //                   ],
+                  //                 ),
+                  //                 child: ClipRRect(
+                  //                   borderRadius: BorderRadius.circular(20),
+                  //                   child: Image.asset(
+                  //                     allBooks[i].coverImage,
+                  //                     fit: BoxFit.fill,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //               Container(
+                  //                 height:
+                  //                 MediaQuery.of(context).size.height * 0.27,
+                  //                 width: double.infinity,
+                  //                 decoration: BoxDecoration(
+                  //                   borderRadius: BorderRadius.circular(20),
+                  //                   gradient: new LinearGradient(
+                  //                     colors: [
+                  //                       Colors.black.withOpacity(0.4),
+                  //                       Colors.transparent,
+                  //                       Colors.black.withOpacity(0.4),
+                  //                     ],
+                  //                     begin: Alignment.centerLeft,
+                  //                     end: Alignment.centerRight,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //         SizedBox(height: 16),
+                  //         Text(
+                  //           allBooks[i].name,
+                  //           style: TextStyle(
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.w700,
+                  //           ),
+                  //         ),
+                  //         SizedBox(
+                  //           height: 2,
+                  //         ),
+                  //         Text(
+                  //           allBooks[i].author,
+                  //           style: TextStyle(
+                  //             fontSize: 14,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //     SizedBox(
+                  //       width: 30,
+                  //     ),
+                  //   ],
+                  // ),
                 ),
-              );
-            },
+              ),
+              itemCount: allBooks.length,
+              scrollDirection: Axis.vertical,
+            ),
           )
         ],
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("lib/assets/images/Home2.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: ListView.builder(
-          itemCount: widget.l.length,
-          itemBuilder: (ctx, i) => GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (ctx) => BooksDetails(
-                  index: i,
-                  selected: true,
-                ),
-              ),
-            ),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Container(
-
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                allBooks[widget.l[i]].name,
-                                style: GoogleFonts.poppins( color: Colors.black, fontSize: 22, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text("Author: ${allBooks[widget.l[i]].author}",style: GoogleFonts.poppins( color: Colors.black, fontSize: 16),),
-
-                            ],
-                          ),
-                        ),
-
-                        Expanded(
-                          flex: 1,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  // "assets/images/0.jfif",
-                  allBooks[widget.l[i]].coverImage,
-                  fit: BoxFit.fill,
-                ),
-              ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15,),
-                    Row(
-                      children: [
-                        Expanded(
-
-                            flex:2,
-                            child: Container(
-                              height: 40.0,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Color.fromRGBO(34, 150, 242, 1),
-
-                              ),
-                              child: FlatButton(
-                                color: Colors.lightGreen,
-                                onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => BooksRead(  index: widget.l[i], selected: true, ),
-                                  ),
-                                ),
-                                child: Text(
-                                  "READ",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ),
-                        SizedBox(width: 15,),
-                        Expanded(
-
-                            flex:2,
-                            child: Container(
-                              height: 40.0,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Color.fromRGBO(34, 150, 242, 1),
-
-                              ),
-                              child: FlatButton(
-                                color: Colors.lightGreen,
-                                onPressed: () async {
-                                  await FirebaseFirestore.instance.collection(name).doc(widget.l[i].toString()).delete();
-// Navigator.of(context).pop();
-// List<int> x=[];
-// await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
-//   querySnapshot.docs.forEach((result) {
-//     print(result.data()["index"]);
-//     x.add(result.data()["index"]);
-//   });
-// });
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => BooksHome(),
-                                    ),
-                                  );
-
-                                },
-                                child: Text(
-                                  "REMOVE",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ),
-                      ],
-                    ),
-                  ],
-
-                ),
-                decoration:BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ) ,
-                padding: EdgeInsets.symmetric(horizontal: 20,vertical: 25),
-                margin: EdgeInsets.only(
-                  left: 10,
-                  right: 10,
-                  top: 10,
-                  bottom: 2,
-                ) ,
-
-              ),
-            ),
-          ),
-          scrollDirection: Axis.vertical,
-        ),
-      ),
     );
   }
-}
-
-Widget buildButtonContainer(String str){
-  return Container(
-    height: 40.0,
-    width: 40,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(5.0),
-      color: Color.fromRGBO(34, 150, 242, 1),
-
-    ),
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: Color.fromRGBO(34, 150, 242, 1),
-      ),
-      onPressed: (){
-        // Navigator. push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => Checkout()),
-        // );
-      } ,
-      child: Text(
-        str,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18.0,
-        ),
-      ),
-
-    ),
-  );
-
 }

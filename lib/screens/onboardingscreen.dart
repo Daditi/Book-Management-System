@@ -10,13 +10,14 @@ class BooksSplash extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              "lib/assets/images/splash3.png",
+              "lib/assets/images/Home.png",
             ),
             fit: BoxFit.cover,
           ),
         ),
         child: SafeArea(
           child: Container(
+            color: Colors.white,
             padding: EdgeInsets.symmetric(
               vertical: 30,
               horizontal: 40,
@@ -37,18 +38,18 @@ class BooksSplash extends StatelessWidget {
                         height: 10,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: Color(0xffC44536),
+                          color: Colors.lightGreen,
                         ),
                       ),
                       SizedBox(
                         height: 50,
                       ),
                       Text(
-                        "read\nlisten\nget Inspired",
+                        "BOOKLIB\nRead\nExplore\nGet Inspired",
                         style: TextStyle(
                           height: 1.75,
                           letterSpacing: 2,
-                          color: Color(0xffC44536),
+                          color: Colors.lightGreen,
                           fontSize: 32,
                           fontWeight: FontWeight.w700,
                         ),
@@ -65,7 +66,7 @@ class BooksSplash extends StatelessWidget {
                       width: 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: Color(0xffC44536),
+                        color: Colors.lightGreen,
                       ),
                       child: IconButton(
                         icon: Icon(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mad_mini_project/screens/Admindashboard.dart';
+import 'package:mad_mini_project/screens/book_home.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'GoogleWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'FacebookWidget.dart';
@@ -19,7 +22,9 @@ class _LoginState extends State<Login> {
   static const white = const Color(0xffFFFFFF);
   static const offWhite = const Color(0xffF3F0F0);
   static const grey = const Color(0xffA4A4A4);
-  final phone = TextEditingController();
+  final name = TextEditingController();
+  final email = TextEditingController();
+  final pass = TextEditingController();
   bool showLoading=false;
   String verificationId="";
 
@@ -27,7 +32,9 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    phone.dispose();
+    name.dispose();
+    email.dispose();
+    pass.dispose();
     super.dispose();
   }
 
@@ -39,7 +46,7 @@ class _LoginState extends State<Login> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Container(
-          color: Color(0xffc44536),
+          color: Colors.lightGreen,
           child: showLoading? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,156 +67,259 @@ class _LoginState extends State<Login> {
                   children: [
 
                     Container(
-                        color: Color(0xffc44536),
+                        color: Colors.lightGreen,
                       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.1,bottom: MediaQuery.of(context).size.height*0.1),
                       child: Image(
                         image: AssetImage("lib/assets/images/Login.jpeg"),
-                        height: MediaQuery.of(context).size.height * 0.30,
+                        height: MediaQuery.of(context).size.height * 0.20,
                       ),
                     ),
 
                     Container(
-                      height: MediaQuery.of(context).size.height*0.5,
+                      height: MediaQuery.of(context).size.height*0.6,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color:  Color(0xfffff8ee),
+                        color:  white,
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
                       ),
                       child: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         child: Column(
                           children: [
-                            // Container(
-                            //   margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.07,left:MediaQuery.of(context).size.width*0.11 ),
-                            //   child:
-                            //   Row(
-                            //     mainAxisAlignment: MainAxisAlignment.start,
-                            //     children: [
-                            //       Icon(Icons.phone,color: blue1,size: 24,),
-                            //       Text("  Enter Mobile Number", style: GoogleFonts.poppins( color: black, fontSize: 18),)
-                            //     ],
-                            //   ),
-                            // ),
 
-//                             Container(
-//                               margin: EdgeInsets.only(top: 20),
-//                               child: Row(
-//                                 mainAxisAlignment: MainAxisAlignment.center,
-//                                 children: [
-//
-//                                   ElevatedButton(
-//                                     onPressed: (){},
-//                                     child: Container(
-//                                       margin: EdgeInsets.only(top: 10,bottom: 10),
-//                                       child: Text("+91", style: GoogleFonts.poppins(fontWeight: FontWeight.w600,
-//                                           fontStyle:  FontStyle.normal,
-//                                           fontSize: 18.0,
-//                                           color: Colors.white),),
-//                                       color: blue1,
-//                                     ),
-//                                   ),
-//
-//                                   Container(
-//                                     width: MediaQuery.of(context).size.width*0.61,
-//                                     height: 48,
-// //                  margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.11),
-//                                     child: TextFormField(
-//                                       textAlignVertical: TextAlignVertical.center,
-//                                       textAlign: TextAlign.center,
-//                                       style: TextStyle(
-//                                         fontSize: 20,
-//                                       ),
-//                                       controller: phone,
-//
-//                                       decoration: InputDecoration(
-//                                         hintText: '',
-//                                         fillColor: offWhite,
-//                                         filled: true,
-//                                         enabledBorder: OutlineInputBorder(
-//                                           borderSide: BorderSide(color: blue1, width: 2),
-//                                         ),
-//                                         focusedBorder: OutlineInputBorder(
-//                                           borderSide: BorderSide(color: blue1,width: 2),
-//                                         ),
-//                                       ),
-//                                       validator: (val) => val!.isEmpty ? 'Enter the Mobile Number': null,
-//                                     ),
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
+                            Container(
+                              margin: EdgeInsets.only(top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                  RaisedButton(
+                                    color: Colors.lightGreen,
+                                    onPressed: (){},
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 10,bottom: 10),
+                                      child:  Icon(Icons.person,color: white,size: 25,),
+                                      color: Colors.lightGreen,
+                                    ),
+                                  ),
 
 
-
-//                             Container(
-//                               width: MediaQuery.of(context).size.width,
-//                               margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.11,right: MediaQuery.of(context).size.width*0.11,top: 20),
-//                               child: ElevatedButton(
-//                                 onPressed: (){
-//
-//                                   setState(() {
-//                                     showLoading = true;
-//                                   });
-//
-//                                   FirebaseAuth auth = FirebaseAuth.instance;
-//                                   auth.verifyPhoneNumber(
-//
-//                                       phoneNumber: "+91${phone.text}",
-//                                       timeout: Duration(seconds: 60),
-//                                       verificationCompleted:(phoneAuthCredential) async{
-//                                         setState(() {
-//                                           showLoading = false;
-//                                         });
-//                                       },
-//                                       verificationFailed: (verificationFailed) async{
-//                                         setState(() {
-//                                           showLoading = false;
-//                                         });
-//
-//                                         // _scaffoldKey.currentState.showSnackBar(
-//                                         //     SnackBar(backgroundColor: blue1, content: Text("Invalid Mobile Number, Please Provide a Valid Number", style: GoogleFonts.poppins( color: blue1, fontSize: 16),)));
-//                                       },
-//
-//                                       codeSent: (verificationId, resendToken) async{
-//                                         setState(() {
-//                                           showLoading = false;
-//                                           this.verificationId = verificationId;
-//                                         });
-//                                         Navigator.push( context, PageTransition(type: PageTransitionType.fade, alignment: Alignment.topCenter, child: OTP( verificationId: verificationId,phone: phone.text.trim())));
-//
-//
-//                                       },
-//                                       codeAutoRetrievalTimeout: (y){}
-//                                   );
-//
-//
-// //            otpLogin("+91${phone.text}", context);
-// //            Navigator.of(context).pushReplacement(MaterialPageRoute(
-// //              builder: (context) => OTP(phone: phone.text))
-// //          );
-//                                 },
-//                                 child: Container(
-//                                   margin: EdgeInsets.only(top: 10,bottom: 10),
-//                                   child: Text("Send OTP", style: GoogleFonts.poppins(fontWeight: FontWeight.w600,
-//                                       fontStyle:  FontStyle.normal,
-//                                       fontSize: 18.0,
-//                                       color: Colors.white),),
-//                                   color: blue1,
-//                                 ),
-//                               ),
-//                             ),
-                            Text(
-                              "Sign In",
-                              style: TextStyle(
-                                height: 1.75,
-                                letterSpacing: 2,
-                                color: Color(0xffC44536),
-                                fontSize: 32,
-                                fontWeight: FontWeight.w700,
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.61,
+                                    height: 48,
+//                  margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.11),
+                                    child: TextFormField(
+                                      textAlignVertical: TextAlignVertical.center,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      ),
+                                      controller: name,
+                                      decoration: InputDecoration(
+                                        hintText: '',
+                                        fillColor: offWhite,
+                                        filled: true,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.lightGreen, width: 2),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.lightGreen,width: 2),
+                                        ),
+                                      ),
+                                      validator: (val) => val!.isEmpty ? 'Enter Full Name': null,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+
+                            Container(
+                              margin: EdgeInsets.only(top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                  RaisedButton(
+                                    color: Colors.lightGreen,
+                                    onPressed: (){},
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 10,bottom: 10),
+                                      child:   Icon(Icons.mail,color: white,size: 25,),
+                                      color: Colors.lightGreen,
+                                    ),
+                                  ),
+
+
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.61,
+                                    height: 48,
+//                  margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.11),
+                                    child: TextFormField(
+                                      textAlignVertical: TextAlignVertical.center,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      ),
+                                      controller: email,
+
+                                      decoration: InputDecoration(
+                                        hintText: '',
+                                        fillColor: offWhite,
+                                        filled: true,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.lightGreen, width: 2),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.lightGreen,width: 2),
+                                        ),
+                                      ),
+                                      validator: (val) => val!.isEmpty ? 'Enter Email Address': null,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+
+                            Container(
+                              margin: EdgeInsets.only(top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                  RaisedButton(
+                                    color: Colors.lightGreen,
+                                    onPressed: (){},
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 10,bottom: 10),
+                                      child:  Icon(Icons.lock,color: white,size: 25,),
+                                      color: Colors.lightGreen,
+                                    ),
+                                  ),
+
+
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.61,
+                                    height: 48,
+//                  margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.11),
+                                    child: TextFormField(
+                                      textAlignVertical: TextAlignVertical.center,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                      controller: pass,
+obscureText: true,
+                                      decoration: InputDecoration(
+                                        hintText: '',
+                                        fillColor: offWhite,
+                                        filled: true,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.lightGreen, width: 2),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(color: Colors.lightGreen,width: 2),
+                                        ),
+                                      ),
+                                      validator: (val) => val!.isEmpty ? 'Enter the Password': null,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+
+
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.11,right: MediaQuery.of(context).size.width*0.11,top: 20),
+                              child: RaisedButton(
+                                color: Colors.lightGreen,
+                                onPressed: () async{
+
+                                  setState(() {
+                                    showLoading = true;
+                                  });
+
+                                  try {
+                                    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                        email:email.text.toString() ,
+                                        password: pass.text.toString(),
+                                    );
+                                    final prefs = await SharedPreferences.getInstance();
+                                    if(email.text.toString()=='admin@gmail.com' && pass.text.toString()=='admin1'){
+                                      await prefs.setString('Name', "Admin");
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Admindashboard(),
+                                          ));
+                                    }
+                                    else{
+                                      await prefs.setString('Name', name.text.toString());
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => BooksHome(),
+                                          ));
+                                    }
+                                  } on FirebaseAuthException catch (e) {
+                                    if (e.code == 'user-not-found') {
+                                      print('No user found for that email.');
+                                    } else if (e.code == 'wrong-password') {
+                                      print('Wrong password provided for that user.');
+                                    }
+                                  }
+                                  // FirebaseAuth auth = FirebaseAuth.instance;
+                                  // auth.verifyPhoneNumber(
+                                  //
+                                  //     phoneNumber: "+91${phone.text}",
+                                  //     timeout: Duration(seconds: 60),
+                                  //     verificationCompleted:(phoneAuthCredential) async{
+                                  //       setState(() {
+                                  //         showLoading = false;
+                                  //       });
+                                  //     },
+                                  //     verificationFailed: (verificationFailed) async{
+                                  //       setState(() {
+                                  //         showLoading = false;
+                                  //       });
+                                  //
+                                  //       // _scaffoldKey.currentState.showSnackBar(
+                                  //       //     SnackBar(backgroundColor: blue1, content: Text("Invalid Mobile Number, Please Provide a Valid Number", style: GoogleFonts.poppins( color: blue1, fontSize: 16),)));
+                                  //     },
+                                  //
+                                  //     codeSent: (verificationId, resendToken) async{
+                                  //       setState(() {
+                                  //         showLoading = false;
+                                  //         this.verificationId = verificationId;
+                                  //       });
+                                  //       Navigator.push( context, PageTransition(type: PageTransitionType.fade, alignment: Alignment.topCenter, child: OTP( verificationId: verificationId,phone: phone.text.trim())));
+                                  //
+                                  //
+                                  //     },
+                                  //     codeAutoRetrievalTimeout: (y){}
+                                  // );
+
+
+//            otpLogin("+91${phone.text}", context);
+//            Navigator.of(context).pushReplacement(MaterialPageRoute(
+//              builder: (context) => OTP(phone: phone.text))
+//          );
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 10,bottom: 10),
+                                  child: Text("Login", style: GoogleFonts.poppins(fontWeight: FontWeight.w600,
+                                      fontStyle:  FontStyle.normal,
+                                      fontSize: 18.0,
+                                      color: Colors.white),),
+                                  color: Colors.lightGreen,
+                                ),
+                              ),
+                            ),
+
                             SizedBox(
-                              height: 60,
+                              height: 10,
                             ),
 
                             Container(

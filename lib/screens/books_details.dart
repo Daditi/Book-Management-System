@@ -106,7 +106,7 @@ class _BooksDetailsState extends State<BooksDetails> {
     ];
 
     return Scaffold(
-      backgroundColor: Color(0xfffff8ee),
+      backgroundColor: Colors.white,
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -127,7 +127,7 @@ class _BooksDetailsState extends State<BooksDetails> {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_back,
-                              color: Color(0xffC44536),
+                              color: Colors.lightGreen,
                               size: 35,
                             ),
                             onPressed: () => Navigator.pop(context),
@@ -139,7 +139,7 @@ class _BooksDetailsState extends State<BooksDetails> {
                               size: 35,
                             ):Icon(
                               Icons.my_library_add_rounded,
-                              color: Color(0xffC44536),
+                              color: Colors.lightGreen,
                               size: 35,
                             ),
                             onPressed: () async {
@@ -151,7 +151,16 @@ class _BooksDetailsState extends State<BooksDetails> {
                                   widget.selected=!widget.selected;
                                 });
                               }
-
+                              final prefs = await SharedPreferences.getInstance();
+                              name = (await prefs.getString('Name'))!;
+                              FirebaseFirestore.instance.collection('Admin').add({
+                              'author': allBooks[widget.index].author, // John Doe
+                              'bookName': allBooks[widget.index].name, // Stokes and Sons
+                              'index': widget.index ,// 42,
+                                'issuer': name,
+                                'url': allBooks[widget.index].coverImage,
+                              }).then((value) => print("User Added"))
+                                  .catchError((error) => print("Failed to add user: $error"));
                             },
                           )
                         ],
@@ -325,7 +334,7 @@ class _BooksDetailsState extends State<BooksDetails> {
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: Color(0xffc44536),
+                          color: Colors.lightGreen,
                         ),
                         child: FlatButton(
                           onPressed: () => Navigator.push(

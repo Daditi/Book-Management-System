@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import 'book_model.dart';
 
@@ -103,7 +104,7 @@ class _BooksReadState extends State<BooksRead> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfffff8ee),
+      backgroundColor: Colors.white,
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -124,7 +125,7 @@ class _BooksReadState extends State<BooksRead> {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_back,
-                              color: Color(0xffC44536),
+                              color: Colors.lightGreen,
                               size: 35,
                             ),
                             onPressed: () => Navigator.pop(context),
@@ -136,7 +137,7 @@ class _BooksReadState extends State<BooksRead> {
                               size: 35,
                             ):Icon(
                               Icons.my_library_add_rounded,
-                              color: Color(0xffC44536),
+                              color: Colors.lightGreen,
                               size: 35,
                             ),
                             onPressed: () async {
@@ -147,6 +148,16 @@ class _BooksReadState extends State<BooksRead> {
                              setState(() {
                                widget.selected=!widget.selected;
                              });
+                             final prefs = await SharedPreferences.getInstance();
+                             name = (await prefs.getString('Name'))!;
+                             FirebaseFirestore.instance.collection('Admin').add({
+                               'author': allBooks[widget.index].author, // John Doe
+                               'bookName': allBooks[widget.index].name, // Stokes and Sons
+                               'index': widget.index ,// 42,
+                               'issuer': name,
+                               'url': allBooks[widget.index].coverImage,
+                             }).then((value) => print("User Added"))
+                                 .catchError((error) => print("Failed to add user: $error"));
                            }
 
                             },
