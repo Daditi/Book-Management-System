@@ -48,7 +48,6 @@ dependencies:
   http: ^0.13.4
   page_transition: ^2.0.4
   provider: ^6.0.1
-  advance_pdf_viewer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -77,7 +76,7 @@ flutter:
     - lib/assets/images/
     - lib/assets/icons/
     - lib/assets/sample_music/
-#    - lib/assets/pdf/pa.pdf
+    - lib/assets/pdf/pa.pdf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -294,7 +294,7 @@ class Semester extends StatelessWidget {
                             child: Container(
                               margin: EdgeInsets.all(10),
                               child: Image(
-                                image: AssetImage("lib/assets/icons/how_app_works.png"),
+                                image: AssetImage("lib/assets/icons/subscription.png"),
                                 height: 20,
                                 width: 20,
                               ),
@@ -394,7 +394,7 @@ class Semester extends StatelessWidget {
                             child: Container(
                               margin: EdgeInsets.all(10),
                               child: Image(
-                                image: AssetImage("lib/assets/icons/how_app_works.png"),
+                                image: AssetImage("lib/assets/icons/subscription.png"),
                                 height: 20,
                                 width: 20,
                               ),

@@ -244,18 +244,18 @@ class _LibraryState extends State<Library> {
                                 color: Colors.lightGreen,
                                 onPressed: () async {
                                   await FirebaseFirestore.instance.collection(name).doc(widget.l[i].toString()).delete();
-// Navigator.of(context).pop();
-// List<int> x=[];
-// await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
-//   querySnapshot.docs.forEach((result) {
-//     print(result.data()["index"]);
-//     x.add(result.data()["index"]);
-//   });
-// });
+List<int> x=[];
+await FirebaseFirestore.instance.collection(name).get().then((querySnapshot) {
+  querySnapshot.docs.forEach((result) {
+    print(result.data()["index"]);
+    x.add(result.data()["index"]);
+  });
+});
+                                  Navigator.of(context).pop();Navigator.of(context).pop();
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => BooksHome(),
+                                      builder: (context) => Library(l: x),
                                     ),
                                   );
 

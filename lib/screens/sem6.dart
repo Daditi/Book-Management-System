@@ -18,7 +18,7 @@ class _Sem6State extends State<Sem6> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Semester VII"),centerTitle: true, backgroundColor: Colors.lightGreen,),
+      appBar: AppBar(title: Text("Semester VI"),centerTitle: true, backgroundColor: Colors.lightGreen,),
       body: Container(
         color: Colors.lightGreen[100],
         child: SingleChildScrollView(
@@ -31,70 +31,55 @@ class _Sem6State extends State<Sem6> {
 
 class BookSection extends StatelessWidget {
   List<Book> allBooks = [
-    Book(
-        name: "Recipie For a Person",
-        author: "Karma Brown",
-        coverImage: "lib/assets/images/3.png",
-        rating: 4.0,
-        text: "On Christmas morning, the girls wake up to find books, probably copies of The Pilgrim’s Progress, under their pillows. Later that day, Marmee encourages them to give away their breakfast to a poor family, the Hummels. Their elderly neighbor, Mr. Laurence, whom the girls have never met, rewards their charitable activities by sending over a feast. "
-            "\nSoon, Meg and Jo are invited to attend a New Year’s Party at the home of Meg’s wealthy friend, Sally Gardiner. At the party, Jo retreats to an alcove, and there meets Laurie, the boy who lives with Mr. Laurence. While dancing, Meg sprains her ankle. Laurie escorts the sisters home. The Marches regret having to return to their daily routine after the holiday festivities."
-            "\nJo visits Laurie when he is sick, and meets his grandfather, Mr. Laurence. She inadvertently insults a painting of Mr. Laurence in front of the man himself. Luckily, Laurie’s grandfather admires Jo’s spunk, and they become friends. Soon, Mr. Laurence meets all the sisters, and Beth becomes his special favorite. Mr. Laurence gives her his deceased granddaughter’s piano."
-    ),
-    Book(
-        name: "The Glass Hotel",
-        author: "Emily St. John Mandel",
-        coverImage: "lib/assets/images/4.png",
-        rating: 4.0,
-        text: "On Christmas morning, the girls wake up to find books, probably copies of The Pilgrim’s Progress, under their pillows. Later that day, Marmee encourages them to give away their breakfast to a poor family, the Hummels. Their elderly neighbor, Mr. Laurence, whom the girls have never met, rewards their charitable activities by sending over a feast. "
-            "\nSoon, Meg and Jo are invited to attend a New Year’s Party at the home of Meg’s wealthy friend, Sally Gardiner. At the party, Jo retreats to an alcove, and there meets Laurie, the boy who lives with Mr. Laurence. While dancing, Meg sprains her ankle. Laurie escorts the sisters home. The Marches regret having to return to their daily routine after the holiday festivities."
-            "\nJo visits Laurie when he is sick, and meets his grandfather, Mr. Laurence. She inadvertently insults a painting of Mr. Laurence in front of the man himself. Luckily, Laurie’s grandfather admires Jo’s spunk, and they become friends. Soon, Mr. Laurence meets all the sisters, and Beth becomes his special favorite. Mr. Laurence gives her his deceased granddaughter’s piano."
-    ),
-    Book(
-        name: "Conjure Women",
-        author: "Afia Atakora",
-        coverImage: "lib/assets/images/0.png",
-        rating: 4.0,
-        text: "On Christmas morning, the girls wake up to find books, probably copies of The Pilgrim’s Progress, under their pillows. Later that day, Marmee encourages them to give away their breakfast to a poor family, the Hummels. Their elderly neighbor, Mr. Laurence, whom the girls have never met, rewards their charitable activities by sending over a feast. "
-            "\nSoon, Meg and Jo are invited to attend a New Year’s Party at the home of Meg’s wealthy friend, Sally Gardiner. At the party, Jo retreats to an alcove, and there meets Laurie, the boy who lives with Mr. Laurence. While dancing, Meg sprains her ankle. Laurie escorts the sisters home. The Marches regret having to return to their daily routine after the holiday festivities."
-            "\nJo visits Laurie when he is sick, and meets his grandfather, Mr. Laurence. She inadvertently insults a painting of Mr. Laurence in front of the man himself. Luckily, Laurie’s grandfather admires Jo’s spunk, and they become friends. Soon, Mr. Laurence meets all the sisters, and Beth becomes his special favorite. Mr. Laurence gives her his deceased granddaughter’s piano."
-    ),
-    Book(
-        name: "Felix Ever After",
-        author: "Kacen Callender",
-        coverImage: "lib/assets/images/1.png",
-        rating: 4.0,
-        text: "On Christmas morning, the girls wake up to find books, probably copies of The Pilgrim’s Progress, under their pillows. Later that day, Marmee encourages them to give away their breakfast to a poor family, the Hummels. Their elderly neighbor, Mr. Laurence, whom the girls have never met, rewards their charitable activities by sending over a feast. "
-            "\nSoon, Meg and Jo are invited to attend a New Year’s Party at the home of Meg’s wealthy friend, Sally Gardiner. At the party, Jo retreats to an alcove, and there meets Laurie, the boy who lives with Mr. Laurence. While dancing, Meg sprains her ankle. Laurie escorts the sisters home. The Marches regret having to return to their daily routine after the holiday festivities."
-            "\nJo visits Laurie when he is sick, and meets his grandfather, Mr. Laurence. She inadvertently insults a painting of Mr. Laurence in front of the man himself. Luckily, Laurie’s grandfather admires Jo’s spunk, and they become friends. Soon, Mr. Laurence meets all the sisters, and Beth becomes his special favorite. Mr. Laurence gives her his deceased granddaughter’s piano."
-    ),
-    Book(
-        name: "From The Ashes",
-        author: "Jesse Thistle",
-        coverImage: "lib/assets/images/2.png",
-        rating: 4.0,
-        text: "On Christmas morning, the girls wake up to find books, probably copies of The Pilgrim’s Progress, under their pillows. Later that day, Marmee encourages them to give away their breakfast to a poor family, the Hummels. Their elderly neighbor, Mr. Laurence, whom the girls have never met, rewards their charitable activities by sending over a feast. "
-            "\nSoon, Meg and Jo are invited to attend a New Year’s Party at the home of Meg’s wealthy friend, Sally Gardiner. At the party, Jo retreats to an alcove, and there meets Laurie, the boy who lives with Mr. Laurence. While dancing, Meg sprains her ankle. Laurie escorts the sisters home. The Marches regret having to return to their daily routine after the holiday festivities."
-            "\nJo visits Laurie when he is sick, and meets his grandfather, Mr. Laurence. She inadvertently insults a painting of Mr. Laurence in front of the man himself. Luckily, Laurie’s grandfather admires Jo’s spunk, and they become friends. Soon, Mr. Laurence meets all the sisters, and Beth becomes his special favorite. Mr. Laurence gives her his deceased granddaughter’s piano."
-    ),
-    Book(
-        name: "City of Girls",
-        author: "Elizabeth Gilbert",
-        coverImage: "lib/assets/images/5.png",
-        rating: 4.0,
-        text: "On Christmas morning, the girls wake up to find books, probably copies of The Pilgrim’s Progress, under their pillows. Later that day, Marmee encourages them to give away their breakfast to a poor family, the Hummels. Their elderly neighbor, Mr. Laurence, whom the girls have never met, rewards their charitable activities by sending over a feast. "
-            "\nSoon, Meg and Jo are invited to attend a New Year’s Party at the home of Meg’s wealthy friend, Sally Gardiner. At the party, Jo retreats to an alcove, and there meets Laurie, the boy who lives with Mr. Laurence. While dancing, Meg sprains her ankle. Laurie escorts the sisters home. The Marches regret having to return to their daily routine after the holiday festivities."
-            "\nJo visits Laurie when he is sick, and meets his grandfather, Mr. Laurence. She inadvertently insults a painting of Mr. Laurence in front of the man himself. Luckily, Laurie’s grandfather admires Jo’s spunk, and they become friends. Soon, Mr. Laurence meets all the sisters, and Beth becomes his special favorite. Mr. Laurence gives her his deceased granddaughter’s piano."
-
-    ),
-    Book(
-        name: "Everything I never..",
-        author: "Cebste NG",
-        coverImage: "lib/assets/images/6.png",
-        rating: 4.0,
-        text: "On Christmas morning, the girls wake up to find books, probably copies of The Pilgrim’s Progress, under their pillows. Later that day, Marmee encourages them to give away their breakfast to a poor family, the Hummels. Their elderly neighbor, Mr. Laurence, whom the girls have never met, rewards their charitable activities by sending over a feast. "
-            "\nSoon, Meg and Jo are invited to attend a New Year’s Party at the home of Meg’s wealthy friend, Sally Gardiner. At the party, Jo retreats to an alcove, and there meets Laurie, the boy who lives with Mr. Laurence. While dancing, Meg sprains her ankle. Laurie escorts the sisters home. The Marches regret having to return to their daily routine after the holiday festivities."
-            "\nJo visits Laurie when he is sick, and meets his grandfather, Mr. Laurence. She inadvertently insults a painting of Mr. Laurence in front of the man himself. Luckily, Laurie’s grandfather admires Jo’s spunk, and they become friends. Soon, Mr. Laurence meets all the sisters, and Beth becomes his special favorite. Mr. Laurence gives her his deceased granddaughter’s piano."
-    ),
+  Book(
+  name: "CCS Cloud Computing Bible",
+  author: "Barrie Sosinsky",
+  coverImage: "lib/assets/images/ccs1.jpeg",
+  rating: 4.0,
+  text: "Cloud computing presents new opportunities to users and developers because it is based on the para-digm of a shared multitenant utility. The ability to access pooled resources on a pay-as-you-go basisprovides a number of system characteristics that completely alter the economics of information tech-nology infrastructures and allows new types of access and business models for user applications.Any application or process that benefits from economies of scale, commoditization of assets, and conformance to programming standards benefits from the application of cloud computing. Any application or process that requires a completely customized solution, imposes a high degree of specialization, and requires access to proprietary technology is going to expose the limits of cloud computing rather quickly. Applications that work with cloud computing are ones that I refer to as low touch” applications; they tend to be applications that have low margins and usually low risk.The “high touch” applications that come with high margins require committed resources and pose more of a risk; those applications are best done on-premises.A cloud is defined as the combination of the infrastructure of a datacenter with the ability to provision hardware and software. A service that concentrates on hardware follows the Infrastructure as aService (IaaS) model, which is a good description for the Amazon Web Service described in Chapter 9. When you add a software stack, such as an operating system and applications to the service, the model shifts to the Software as a Service (SaaS) model. Microsoft’s Windows Azure Platform, discussed in Chapter 10, is best described as currently using SaaS model. When the service requires the client to use a complete hardware/software/application stack, it is using the most refined and restrictive service model, called the Platform as a Service (PaaS) model. The best example of a PaaS offering is probably SalesForce.com. The Google App Engine discussed in Chapter 11is another PaaS. As the Windows Azure Platform matures adding more access to Microsoft servers, it is developing into a PaaS model rather quickly. "
+  ),
+  Book(
+  name: "CCS Cloud Computing and Services",
+  author: "Pankaj Brahmankar",
+  coverImage: "lib/assets/images/ccs2.jpeg",
+  rating: 4.0,
+  text: "Cloud computing is the on-demand availability of computer system resources, especially data storage and computing power, without direct active management by the user. Large clouds often have functions distributed over multiple locations, each location being a data center. There are also 3 main types of cloud computing services: Infrastructure-as-a-Service (IaaS), Platforms-as-a-Service (PaaS), and Software-as-a-Service (SaaS)."
+  ),
+  Book(
+  name: "SEPM Information Technology Project Management",
+  author: "Jack Marchewka",
+  coverImage: "lib/assets/images/sepm1.jpeg",
+  rating: 4.0,
+  text: "Information technology (IT) projects are organizational investments. When an organization builds or implements an IT solution, it often commits considerable time, money, and resources to the project with an expectation of receiving something of value in return. To improve the chances of success, you will be introduced to a relatively new discipline called information technology project management (ITPM). Some may argue that managing an IT project is like managing any other project, so all we need to do is apply the processes, tools, and techniques of traditional project management. This may be true to some degree, but a one-size-fits-all approach has not served us all that well in the past. Moreover, building an information system is differentfrom building a house, a bridge, or a rocket for space travel. Although many of the project processes are similar, an entirely different approach to engineering each of these examples is needed. By combining the body of knowledge of modern-day project management with the body of knowledge of management information systems (in particular, software engineering "
+  ),
+  Book(
+  name: "SEPM Software Engineering and Project Mangement",
+  author: "Pankaj Brahmankar",
+  coverImage: "lib/assets/images/dbms1.jpeg",
+  rating: 4.0,
+  text: "Information technology (IT) projects are organizational investments. When an organization builds or implements an IT solution, it often commits considerable time, money, and resources to the project with an expectation of receiving something of value in return. To improve the chances of success, you will be introduced to a relatively new discipline called information technology project management (ITPM). Some may argue that managing an IT project is like managing any other project, so all we need to do is apply the processes, tools, and techniques of traditional project management. This may be true to some degree, but a one-size-fits-all approachhas not served us all that well in the past. Moreover, building an information system is different from building a house, a bridge, or a rocket for space travel. Although many of the project processes are similar, an entirely different approach to engineering each of these examples is needed. By combining the body of knowledge of modern-day project management with the body of knowledge of management information systems (in particular, software engineering     ."
+  ),
+  Book(
+  name: "Business Intelligence",
+  author: "Cralo Vercellis",
+  coverImage: "lib/assets/images/bi1.jpeg",
+  rating: 4.0,
+  text: "The architecture of a business intelligence system, depicted in Figure 1.2, includes three major components. Data sources. In a first stage, it is necessary to gather and integrate the data stored in the various primary and secondary sources, which are heterogeneous in origin and type. The sources consist for the most part of data belonging to operational systems, but may also include unstructured documents, such as emails and data received from external providers. Generally speaking, a major effort is required to unify and integrate the different data sources, as shown in Chapter 3. Data warehouses and data marts. Using extraction and transformation tools known as extract, transform, load (ETL), the data originating from the different sources are stored in databases intended to support business intelligenceanalyses. These databases are usually referred to as data warehouses and data marts, and they will be the subject of Chapter 3. Business intelligence methodologies. Data are finally extracted and used to feed mathematical models and analysis methodologies intended to support decision makers. In a business intelligence system, several decision support applications may be implemented, most of which will be described in the following chapters."
+  ),
+  // Book(
+  // name: "Data Mining and management”,
+  // author: "Dr Arti Deshpande”,
+  // coverImage: "lib/assets/images/5.png",
+  // rating: 4.0,
+  // text: "The architecture of a business intelligence system, depicted in Figure 1.2, includes three major components. Data sources. In a first stage, it is necessary to gather and integrate the data stored in the various primary and secondary sources, which are heterogeneous inorigin and type. The sources consist for the most part of data belonging to opertional systems, but may also include unstructured documents, such as emailsand data received from external providers. Generally speaking, a major effort is required to unify and integrate the different data sources, as shown in Chapter 3. Data warehouses and data marts. Using extraction and transformation tools  known as extract, transform, load (ETL), the data originating from the different sources are stored in databases intended to support business intelligenceanalyses. These databases are usually referred to as data warehouses and data marts, and they will be the subject of Chapter 3. Business intelligence methodologies. Data are finally extracted and used to feed mathematical models and analysis methodologies intended to support decision makers. In a business intelligence system, several decision support applications may be implemented, most of which will be described in the following chapters.”
+  // ),
+  Book(
+  name: "Network Security Assessment",
+  author: "Chris McNab",
+  coverImage: "lib/assets/images/ns1.jpeg",
+  rating: 4.0,
+  text: "User Account Enumeration Sendmail and other servers permit mailbox and local user account enumeration. Within Kali Linux, you can use the smtp-user-enum utility to identify accounts through the EXPN, VRFY, and RCPT TO commands. In the following sections, I manually demonstrate each technique.  EXPN  The EXPN command expands details for a given mail address, as shown in Example 9-6. Through  analyzing the server responses, we find the test user account doesn’t exist, mail for root is forwarded to chris@example.org, and an sshd account exists for privilege separation purposes."
+  ),
   ];
 
 
@@ -163,7 +148,7 @@ margin: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                               children: [
                                 Text(
                                   allBooks[i].name,
-                                  style: GoogleFonts.poppins( color: Colors.black, fontSize: 22, fontWeight: FontWeight.bold),
+                                  style: GoogleFonts.poppins( color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(
                                   height: 8,

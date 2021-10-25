@@ -6,9 +6,12 @@ class pdf extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
     return Scaffold(
       appBar: AppBar(),
-      body: SfPdfViewer.network("https://drive.google.com/file/d/1dmKC2R1rC-NQwz0CnME6LFAOc5-6tyc6/view?usp=sharing"),
+      body: SfPdfViewer.asset("lib/assets/pdf/pa.pdf")
     );
+
+    // SfPdfViewer.network("https://drive.google.com/file/d/1dmKC2R1rC-NQwz0CnME6LFAOc5-6tyc6/view?usp=sharing"),
   }
 }
