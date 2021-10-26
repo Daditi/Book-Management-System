@@ -144,7 +144,11 @@ class _BooksReadState extends State<BooksRead> {
                               print("@@@@@@@@@@@@@");
                            if(!widget.selected){
                              await  FirebaseFirestore.instance
-                                 .collection(name).doc(widget.index.toString()).set({"index":widget.index});
+                                 .collection(name).doc(widget.index.toString()).set({  'author': allBooks[widget.index].author, // John Doe
+                               'bookName': allBooks[widget.index].name, // Stokes and Sons
+                               'index': widget.index ,// 42,
+                               'issuer': name,
+                               'url': allBooks[widget.index].coverImage,});
                              setState(() {
                                widget.selected=!widget.selected;
                              });

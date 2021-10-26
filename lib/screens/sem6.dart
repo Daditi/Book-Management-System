@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mad_mini_project/screens/semeseter_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'book_model.dart';
@@ -113,25 +114,13 @@ margin: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
 
                 child: GestureDetector(
                   onTap: () async {
-                    final prefs = await SharedPreferences.getInstance();
-                    final name = (await prefs.getString('Name'))!;
-                    await FirebaseFirestore.instance.collection(name).doc(i.toString()).get().then((DocumentSnapshot documentSnapshot) {
-                      if (documentSnapshot.exists) {
-                        print('Document exists on the database');
-                        prefs.setBool('selected', true);
-                        bool selected = (prefs.getBool('selected'))!;
-                      }else{
-                        print('Document not');
-                        prefs.setBool('selected', false);
-                        bool selected = false;
-                      }
-                    });
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (ctx) => BooksDetails(
-                            index: i,
-                            selected: (prefs.getBool('selected'))!
+                        builder: (ctx) => SemesterDetails(
+                          title: allBooks[i].name,
+                          text:allBooks[i].text,
                         ),
                       ),
                     );
