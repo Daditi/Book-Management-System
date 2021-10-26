@@ -117,6 +117,7 @@ class BooksProfile extends StatelessWidget {
                             alignment: Alignment.bottomCenter,
                             child: BookSection(
                               heading: "BookShelf",
+                              s: false,
                             ),
                           ),
                         )

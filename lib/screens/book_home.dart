@@ -19,7 +19,7 @@ class BooksHome extends StatefulWidget {
 }
 
 class _BooksHomeState extends State<BooksHome> {
-
+ bool s = true;
   String name = "";
   @override
   void initState() {
@@ -30,7 +30,10 @@ class _BooksHomeState extends State<BooksHome> {
 
   void _name() async {
     final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('switch', false);
     name = (await prefs.getString('Name'))!;
+    s = (await prefs.getBool('switch'))!;
+
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     print(name);
     if(name==null){
@@ -62,10 +65,15 @@ List<int> l=[];
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Switch(value: s, onChanged: (state){
+                    setState(() {
+                      s = state;
+                    });
+                  }),
                   IconButton(
                     icon: Icon(
                       Icons.library_books,
-                      color: Colors.white,
+                      color: s ? Colors.black:Colors.white,
                       size: 35,
                     ),
                     onPressed: () async{
@@ -88,7 +96,7 @@ List<int> l=[];
                   IconButton(
                     icon: Icon(
                       Icons.bookmark_outlined,
-                      color: Colors.white,
+                      color: s ? Colors.black:Colors.white,
                       size: 35,
                     ),
                     onPressed: () async {
@@ -103,7 +111,7 @@ List<int> l=[];
                   IconButton(
                     icon: Icon(
                       Icons.logout,
-                      color: Colors.white,
+                      color: s ? Colors.black:Colors.white,
                       size: 35,
                     ),
                     onPressed: () async {
@@ -126,7 +134,7 @@ List<int> l=[];
                 ),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: s? Colors.black: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
@@ -141,6 +149,7 @@ List<int> l=[];
                           Text(
                             "       Welcome to  ",
                             style: TextStyle(
+                              color: s ? Colors.white:Colors.black,
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
@@ -148,6 +157,7 @@ List<int> l=[];
                           Text(
                             "BookLib",
                             style: TextStyle(
+                              color: s?  Colors.white:Colors.black,
                               fontSize: 25,
                               fontWeight: FontWeight.w700,
                             ),
@@ -164,12 +174,13 @@ List<int> l=[];
                         height: 10,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: Colors.lightGreen[800],
+                          color: s? Colors.lightGreen[500]:Colors.lightGreen[800],
                         ),
                       ),
 
                       BookSection(
                         heading: "       Reading List",
+                        s: s
                       ),
                     ],
                   ),
@@ -254,9 +265,11 @@ class BookSection extends StatelessWidget {
 
 
   final String heading;
-  BookSection({required this.heading});
+  bool s;
+  BookSection({Key? key, required this.heading, required this.s}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+
     List<Book> bookList;
 
       bookList = allBooks;
@@ -268,6 +281,7 @@ class BookSection extends StatelessWidget {
           Text(
             heading,
             style: TextStyle(
+              color: s ? Colors.white:Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.w700,
             ),
@@ -361,6 +375,7 @@ class BookSection extends StatelessWidget {
                         Text(
                           allBooks[i].name,
                           style: TextStyle(
+                            color: s? Colors.white:Colors.black,
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
                           ),
@@ -371,6 +386,7 @@ class BookSection extends StatelessWidget {
                         Text(
                           allBooks[i].author,
                           style: TextStyle(
+                            color: s? Colors.white:Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
