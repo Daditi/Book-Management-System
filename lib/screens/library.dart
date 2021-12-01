@@ -20,6 +20,15 @@ class _LibraryState extends State<Library> {
   
   List<Book> allBooks = [
     Book(
+        name: "The Secret",
+        author: "Rhonda Byne",
+        coverImage: "lib/assets/images/secret.jpeg",
+        rating: 5.0,
+        text: "   The Secret is a self-help book regarding the power of positive thinking by Rhonda Byrne. The book suggests the notion that like attracts the like, which means if you emit positive energy, it will be very beneficial because you will attract positive things to you. Byrne proposed that positive thinking magnets positive outcomes. \nSimply believing in what you want to acquire or become will become of you. The book portrays that the secret is mainly about the law of attraction but it also highlights gratitude and visualization. \nThe primary technique of ask, believe and receive is explained further by stating some facts from some of the Secret’s practitioners. The book promotes encouragement for people in times of trials or deepens their urge to succeed. Happiness, wealth, success in relationships, and even health improvement are all justified as achievable by the application of the so-called secret."
+    ),
+
+
+    Book(
         name: "Recipie For a Person",
         author: "Karma Brown",
         coverImage: "lib/assets/images/3.png",

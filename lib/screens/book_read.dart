@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mad_mini_project/screens/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -35,6 +36,16 @@ class _BooksReadState extends State<BooksRead> {
 
 
   List<Book> allBooks = [
+
+    Book(
+        name: "The Secret",
+        author: "Rhonda Byne",
+        coverImage: "lib/assets/images/secret.jpeg",
+        rating: 5.0,
+        text: "   The Secret is a self-help book regarding the power of positive thinking by Rhonda Byrne. The book suggests the notion that like attracts the like, which means if you emit positive energy, it will be very beneficial because you will attract positive things to you. Byrne proposed that positive thinking magnets positive outcomes. \nSimply believing in what you want to acquire or become will become of you. The book portrays that the secret is mainly about the law of attraction but it also highlights gratitude and visualization. \nThe primary technique of ask, believe and receive is explained further by stating some facts from some of the Secret’s practitioners. The book promotes encouragement for people in times of trials or deepens their urge to succeed. Happiness, wealth, success in relationships, and even health improvement are all justified as achievable by the application of the so-called secret."
+    ),
+
+
     Book(
         name: "Recipie For a Person",
         author: "Karma Brown",
@@ -131,6 +142,19 @@ class _BooksReadState extends State<BooksRead> {
                             onPressed: () => Navigator.pop(context),
                           ),
                           IconButton(
+                            icon: Icon(
+                              Icons.picture_as_pdf,
+                              color: Colors.lightGreen,
+                              size: 35,
+                            ),
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => pdf(),
+                              ),
+                            ),
+                          ),
+                          IconButton(
                             icon: widget.selected ? Icon(
                               Icons.check_circle_rounded,
                               color: Colors.black,
@@ -168,6 +192,9 @@ class _BooksReadState extends State<BooksRead> {
                           )
                         ],
                       ),
+                    ),
+                    Container(
+                      child: Text('Book Summary', style: TextStyle(fontSize: 28,fontWeight: FontWeight.w500),),
                     ),
                     Expanded(
                       child: SingleChildScrollView(

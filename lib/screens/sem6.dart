@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mad_mini_project/screens/pdfsem.dart';
 import 'package:mad_mini_project/screens/semeseter_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -118,10 +119,7 @@ margin: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (ctx) => SemesterDetails(
-                          title: allBooks[i].name,
-                          text:allBooks[i].text,
-                        ),
+                        builder: (ctx) => pdfsem(),
                       ),
                     );
                   } ,

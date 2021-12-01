@@ -13,12 +13,12 @@ void main() async  {
   await Firebase.initializeApp();
  if(FirebaseAuth.instance.currentUser?.uid == null){
 runApp(MaterialApp(
- home: BooksSplash(),
+ home: BooksHome(),
 ));
  } else {
 // logged
   runApp(MaterialApp(
-    home: BooksHome(),
+    home: BooksSplash(),
   ));
  }
  // runApp(

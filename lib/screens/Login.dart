@@ -51,7 +51,11 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircularProgressIndicator(backgroundColor: white,),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 50,vertical: 390),
+                    child: CircularProgressIndicator(backgroundColor: white,)),
+              ),
             ],
           ) : GestureDetector(
             onTap: (){
@@ -243,8 +247,8 @@ obscureText: true,
 
                                   try {
                                     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-                                        email:email.text.toString() ,
-                                        password: pass.text.toString(),
+                                        email:"abcdef@gmail.com" ,
+                                        password: "abcdef",
                                     );
                                     final prefs = await SharedPreferences.getInstance();
                                     if(email.text.toString()=='admin@gmail.com' && pass.text.toString()=='admin1'){

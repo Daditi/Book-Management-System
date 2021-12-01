@@ -27,15 +27,8 @@ class pdf extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
     return Scaffold(
-      appBar: AppBar(),
-      body:ElevatedButton(
-
-          child: Text('Tap to Open Document'),
-              // style: themeData.textTheme.headline4?.copyWith(fontSize: 21.0)),
-          onPressed: () => showDocument(context)
-
-      // SfPdfViewer.asset("lib/assets/pdf/pa.pdf")
-      )
+      appBar: AppBar(backgroundColor: Colors.lightGreen,),
+      body:SfPdfViewer.asset('lib/assets/pdf/secret.pdf',),
     );
 
     // SfPdfViewer.network("https://drive.google.com/file/d/1dmKC2R1rC-NQwz0CnME6LFAOc5-6tyc6/view?usp=sharing"),
